@@ -37,16 +37,16 @@ function checkDatabase() {
     const getAll = store.getAll();
 
 
-getAll.onsuccess = () => {
-    if (getAll.results.length > 0) {
-        fetch("/api/transactioin/bulk", {
-            method: "POST",
-            body: JSON.stringify(getAll.results),
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                "Content-Type": "application/json"
-            }
-    })
+    getAll.onsuccess = function() {
+        if (getAll.result.length > 0) {
+            fetch("/api/transaction/bulk", {
+                    method: "POST",
+                    body: JSON.stringify(getAll.result),
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json"
+                    }
+                })
         .then((response) => response.json())
         .then(() =>{
             const transaction = db.transaction(["pending"], "readwrite");

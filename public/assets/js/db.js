@@ -17,3 +17,8 @@ request.onsuccess = function(e) {
     }
 };
 
+function saveRecords(record) {
+    const transaction = db.transaction("pending", "rewrite");
+    const store = transaction.objectStore("pending");
+    store.add(record);
+}

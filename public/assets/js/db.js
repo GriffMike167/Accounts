@@ -9,7 +9,7 @@ let db;
 const request = window.indexedDB.open("budget", 1);
 
 request.onupgradeneeded = function(event) {
-    event.target.reselt.createObjectStore("pending", { keyPath: "_id", autoIncrement: true });
+    event.target.result.createObjectStore("pending", { keyPath: "_id", autoIncrement: true });
   };
 
 request.onerror = function(err) {
@@ -33,7 +33,7 @@ function saveRecord (record) {
 function checkDatabase() {
     const transaction = db.transaction("pending", "readonly");
     const store = transaction.objectStore("pending");
-    const getAll =store.getAll();
+    const getAll = store.getAll();
 };
 
 getAll.onsuccess = () => {

@@ -1,15 +1,16 @@
 // const { json } = require("express");
-const indexedDB =
-      window.indexedDB || 
-      window.mozIndexedDB || 
-      window.webkitIndexedDB || 
-      window.msIndexedDB;
+// const indexedDB =
+//       window.indexedDB || 
+//       window.mozIndexedDB || 
+//       window.webkitIndexedDB || 
+//       window.msIndexedDB;
 
 let db;
-const request = window.indexedDB.open("accounts", 1);
+const request = indexedDB.open("accounts", 1);
 
 request.onupgradeneeded = function(event) {
-    event.target.result.createObjectStore("pending", { keyPath: "_id", autoIncrement: true });
+    event.target.result;
+    createObjectStore("pending", { autoIncrement: true });
   };
 
 request.onerror = function(err) {
@@ -25,13 +26,13 @@ request.onsuccess = function(e) {
 };
 
 function saveRecord (record) {
-    const transaction = db.transaction("pending", "readwrite");
+    const transaction = db.transaction(["pending"], "readwrite");
     const store = transaction.objectStore("pending");
     store.add(record);
 };
 
 function checkDatabase() {
-    const transaction = db.transaction("pending", "readonly");
+    const transaction = db.transaction(["pending"], "readonly");
     const store = transaction.objectStore("pending");
     const getAll = store.getAll();
 
@@ -48,12 +49,17 @@ getAll.onsuccess = () => {
     })
         .then((response) => response.json())
         .then(() =>{
-            const transaction = db.transaction("pending", "readwrite");
+            const transaction = db.transaction(["pending"], "readwrite");
             const store = transaction.objectStore("pending");
             store.clear();
 
         })
 };
 }}
+function deletePending() {
+    const transaction = db.transaction(["pending"], "readwrite");
+    const store = transaction.objectStore("pending");
+    store.clear();
+}
 
 window.addEventListener("online", checkDatabase);

@@ -1,29 +1,30 @@
-const CACHE_NAME = "static-cache-v1";
-const DATA_CACHE_NAME = "data-cache-v1";
+
 const FILES_TO_CACHE = [
   "/",
   "/index.html",
-  // "/assets/css/style.css",
-  "/assets/js/index.js",
-  "/assets/js/db.js",
-  // "/assets/images/icon/icon-192x192.png",
-  // "/assets/images/icon/icon-512x512.png",
-  "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
-  "https://cdn.jsdelivr.net/npm/chart.js@2.8.0"
+  "/styles.css",
+  "/index.js",
+  "/db.js",
+  "/icons/icon-192x192.png",
+  "/icons/icon-512x512.png",
+  
 
 ];
+
+const CACHE_NAME = "static-cache-v2";
+const DATA_CACHE_NAME = "data-cache-v1";
 
 // install
 self.addEventListener("install", function (evt) {
   // pre cache image data
   evt.waitUntil(
-    caches.open(DATA_CACHE_NAME).then((cache) => {return cache.add('/api/images')})
+    caches.open(CACHE_NAME).then((cache) => {return cache.addAll(FILES_TO_CACHE)})
   );
     
   // pre cache all static assets
-  evt.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
-  );
+  // evt.waitUntil(
+  //   caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
+  // );
 
   // tell the browser to activate this service worker immediately once it
   // has finished installing

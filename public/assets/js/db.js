@@ -34,7 +34,7 @@ function checkDatabase() {
     const transaction = db.transaction("pending", "readonly");
     const store = transaction.objectStore("pending");
     const getAll = store.getAll();
-};
+
 
 getAll.onsuccess = () => {
     if (getAll.results.lenght > 0) {
@@ -54,6 +54,6 @@ getAll.onsuccess = () => {
 
         })
 };
-}
+}}
 
 window.addEventListener("online", checkDatabase);

@@ -1,7 +1,12 @@
 // const { json } = require("express");
+const indexedDB =
+      window.indexedDB || 
+      window.mozIndexedDB || 
+      window.webkitIndexedDB || 
+      window.msIndexedDB;
 
 let db;
-const request = window.indexedDB.open(databaseName, 1);
+const request = window.indexedDB.open("budget", 1);
 
 request.onupgradeneeded = function(event) {
     event.target.reselt.createObjectStore("pending", { keyPath: "_id", autoIncrement: true });

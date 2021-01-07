@@ -6,7 +6,7 @@ const indexedDB =
       window.msIndexedDB;
 
 let db;
-const request = window.indexedDB.open("budget", 1);
+const request = window.indexedDB.open("accounts", 1);
 
 request.onupgradeneeded = function(event) {
     event.target.result.createObjectStore("pending", { keyPath: "_id", autoIncrement: true });
@@ -25,7 +25,7 @@ request.onsuccess = function(e) {
 };
 
 function saveRecord (record) {
-    const transaction = db.transaction("pending", "rewrite");
+    const transaction = db.transaction("pending", "readwrite");
     const store = transaction.objectStore("pending");
     store.add(record);
 };
@@ -37,7 +37,7 @@ function checkDatabase() {
 
 
 getAll.onsuccess = () => {
-    if (getAll.results.lenght > 0) {
+    if (getAll.results.length > 0) {
         fetch("/api/transactioin/bulk", {
             method: "POST",
             body: JSON.stringify(getAll.results),
@@ -48,7 +48,7 @@ getAll.onsuccess = () => {
     })
         .then((response) => response.json())
         .then(() =>{
-            const transaction = db.transaction("pending", "rewrite");
+            const transaction = db.transaction("pending", "readwrite");
             const store = transaction.objectStore("pending");
             store.clear();
 

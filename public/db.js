@@ -63,5 +63,3 @@ function deletePending() {
 }
 
 window.addEventListener("online", checkDatabase);
-
-mongodb+srv://griffmike167:irish4528@accounts.pp5ya.mongodb.net/transactions?retryWrites=true&w=majority
